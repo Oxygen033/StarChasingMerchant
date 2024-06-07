@@ -1,0 +1,21 @@
+import { Inventory } from "src/inventories/entities/inventory.entity";
+import { Entity, ManyToOne, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Item } from "./item.entity";
+
+@Entity()
+export class InventoryItem {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @ManyToOne(() => Inventory, (inventory) => inventory.items)
+    inventory: Inventory;
+
+    @ManyToOne(() => Item)
+    item: Item;
+
+    @Column()
+    slotNumber: number;
+
+    @Column({default: false})
+    equipped: boolean;
+}

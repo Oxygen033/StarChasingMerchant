@@ -1,5 +1,4 @@
-export enum ItemType {
-  GENERAL,
+export enum EquipmentSlotType {
   CLOTHING_UPPERBODY,
   CLOTHING_LEGS,
   CLOTHING_HANDS,
@@ -16,6 +15,4 @@ export enum ItemType {
   WEAPON_TWOHAND,
   WEAPON_STAFF,
   WEAPON_UNCATEGORIZED,
-  POTION,
-  USABLE,
 }

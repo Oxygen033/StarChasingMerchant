@@ -1,17 +1,18 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { ItemType } from "../enums/ItemType";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ItemType } from '../enums/ItemType';
 
-@Entity()
 export class Item {
-    @PrimaryGeneratedColumn()
-    id: number;
+  constructor(_name: string, _desc: string, _type: ItemType, _cost: number) {
+    this.name = _name;
+    this.type = _type;
+    this.cost = _cost;
+    this.description = _desc;
+  }
 
-    @Column()
-    name: string;
+  name: string;
+  description: string;
+  type: ItemType;
+  cost: number;
 
-    @Column({type: 'enum', enum: ItemType})
-    type: string;
-
-    @Column()
-    cost: number;
+  public use(): void {}
 }

@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import "reflect-metadata";
+import 'reflect-metadata';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { CharactersModule } from './characters/characters.module';
 import { InventoriesModule } from './inventories/inventories.module';
 import { ItemsModule } from './items/items.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,12 +21,13 @@ import { ItemsModule } from './items/items.module';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       autoLoadEntities: true,
-      synchronize: true
+      synchronize: true,
     }),
     UsersModule,
     CharactersModule,
     InventoriesModule,
-    ItemsModule
+    ItemsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

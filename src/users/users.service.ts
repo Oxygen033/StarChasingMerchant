@@ -9,8 +9,8 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersService {
   constructor(
-     @InjectRepository(User)
-     private usersRepository: Repository<User>,
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -24,15 +24,20 @@ export class UsersService {
     return await this.usersRepository.find();
   }
 
-  async findOne(id: number) {
-    return await this.usersRepository.findOne({where: {id: id}});
+  async findOne(username: string) {
+    return await this.usersRepository.findOne({
+      where: { username: username },
+    });
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(username: string, updateUserDto: UpdateUserDto) {
+    return await this.usersRepository.update(
+      { username: username },
+      updateUserDto,
+    );
   }
 
-  async remove(id: number) {
-    return await this.usersRepository.delete({id: id});
+  async remove(username: string) {
+    return await this.usersRepository.delete({ username: username });
   }
 }

@@ -1,0 +1,7 @@
+{
+    "name": "Debug Item",
+    "description": "Debug item with no purpose",
+    "type": "USABLE",
+    "cost": 100,
+    "script": "debugItem"
+}

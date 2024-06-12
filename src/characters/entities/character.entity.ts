@@ -1,24 +1,30 @@
-import { Inventory } from "src/inventories/entities/inventory.entity";
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { EquipmentSlot } from "./equipmentSlot.entity";
+import { Inventory } from 'src/inventories/entities/inventory.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { EquipmentSlot } from './equipmentSlot.entity';
 
 @Entity()
 export class Character {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    level: number;
+  @Column()
+  level: number;
 
-    @Column()
-    exp: number;
+  @Column()
+  exp: number;
 
-    @OneToMany(() => Inventory, (inventory) => inventory.character)
-    inventories: Inventory[];
+  @Column({ type: 'enum', enum: ['MALE', 'FEMALE'] })
+  sex: string;
 
-    @OneToMany(() => EquipmentSlot, (equipmentSlot) => equipmentSlot.character)
-    equipmentSlots: EquipmentSlot[];
+  @Column()
+  age: number;
+
+  @OneToMany(() => Inventory, (inventory) => inventory.character)
+  inventories: Inventory[];
+
+  @OneToMany(() => EquipmentSlot, (equipmentSlot) => equipmentSlot.character)
+  equipmentSlots: EquipmentSlot[];
 }

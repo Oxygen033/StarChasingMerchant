@@ -1,26 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { CreateItemDto } from './dto/create-item.dto';
-import { UpdateItemDto } from './dto/update-item.dto';
+import { Injectable, Req } from '@nestjs/common';
+import { ItemFactoryService } from './itemsFactory.service';
+import { Request } from 'express';
+import { ItemPrototypeService } from './itemsPrototype.service';
+import { ItemType } from './enums/ItemType';
 
 @Injectable()
 export class ItemsService {
-  create(createItemDto: CreateItemDto) {
-    return 'This action adds a new item';
+  constructor(
+    private itemsFactoryService: ItemFactoryService,
+    private itemPrototypeService: ItemPrototypeService,
+  ) {}
+
+  useItem(itemName: string, @Req() req: Request) {
+    const item = this.itemsFactoryService.createItem(itemName);
+    const currentDate = new Date();
+    console.log(
+      `\x1b[34m[LOG ${currentDate.getDate()}/${currentDate.getMonth()}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}]\x1b[0m User ${req.username} (${req.id}) used item ${itemName} (cost: ${item.cost})`,
+    );
+    return item.use();
   }
 
-  findAll() {
-    return `This action returns all items`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} item`;
-  }
-
-  update(id: number, updateItemDto: UpdateItemDto) {
-    return `This action updates a #${id} item`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} item`;
+  getItemInfo(itemName: string) {
+    return this.itemPrototypeService.getItemPrototype(itemName);
   }
 }

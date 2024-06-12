@@ -1,21 +1,21 @@
-import { Inventory } from "src/inventories/entities/inventory.entity";
-import { Entity, ManyToOne, PrimaryGeneratedColumn, Column } from "typeorm";
-import { Item } from "./item.entity";
+import { Inventory } from 'src/inventories/entities/inventory.entity';
+import { Entity, ManyToOne, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Item } from './item.entity';
 
 @Entity()
 export class InventoryItem {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @ManyToOne(() => Inventory, (inventory) => inventory.items)
-    inventory: Inventory;
+  @ManyToOne(() => Inventory, (inventory) => inventory.items)
+  inventory: Inventory;
 
-    @ManyToOne(() => Item)
-    item: Item;
+  @Column()
+  itemName: string;
 
-    @Column()
-    slotNumber: number;
+  @Column()
+  slotNumber: number;
 
-    @Column({default: false})
-    equipped: boolean;
+  @Column({ default: false })
+  equipped: boolean;
 }

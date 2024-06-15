@@ -1,6 +1,7 @@
 import { Exclude } from 'class-transformer';
 import { Role } from 'src/auth/roles/role.enum';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Character } from 'src/characters/entities/character.entity';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -16,4 +17,8 @@ export class User {
   @Column({ type: 'enum', enum: Role, default: Role.User })
   @Exclude({ toPlainOnly: true })
   roles: Role[];
+
+  @OneToOne(() => Character)
+  @JoinColumn()
+  character: Character;
 }

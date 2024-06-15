@@ -15,7 +15,7 @@ export class Inventory {
 
   @ManyToOne(() => Character, (character) => character.inventories)
   character: Character;
-
+  
   @Column()
   capacity: number;
 

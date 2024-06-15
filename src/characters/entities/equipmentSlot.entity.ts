@@ -20,6 +20,6 @@ export class EquipmentSlot {
   @Column({ type: 'enum', enum: EquipmentSlotType })
   slotType: string;
 
-  @ManyToOne(() => Item, { nullable: true })
-  item: Item;
+  @Column({nullable: true})
+  item: string;
 }

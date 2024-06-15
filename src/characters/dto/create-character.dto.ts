@@ -1,17 +1,23 @@
-import { IsNotEmpty, IsString, isNotEmpty } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString, isNotEmpty } from 'class-validator';
+import { Race } from '../enums/races.enum';
+import { CharacterSpecClass } from '../enums/classes.enum';
 
 export class CreateCharacterDto {
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @IsString()
+  @IsEnum(Race)
   @IsNotEmpty()
-  race: string;
+  race: Race;
 
   @IsString()
   @IsNotEmpty()
-  class: string;
+  sex: string;
+
+  @IsEnum(CharacterSpecClass)
+  @IsNotEmpty()
+  class: CharacterSpecClass;
 
   @IsString()
   @IsNotEmpty()

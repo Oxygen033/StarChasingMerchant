@@ -1,6 +1,9 @@
 import { Inventory } from 'src/inventories/entities/inventory.entity';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, AfterInsert } from 'typeorm';
 import { EquipmentSlot } from './equipmentSlot.entity';
+import { Race } from '../enums/races.enum';
+import { CharacterSpecClass } from '../enums/classes.enum';
+import { InventoriesService } from 'src/inventories/inventories.service';
 
 @Entity()
 export class Character {
@@ -10,10 +13,10 @@ export class Character {
   @Column()
   name: string;
 
-  @Column()
+  @Column({default: 0})
   level: number;
 
-  @Column()
+  @Column({default: 0})
   exp: number;
 
   @Column({ type: 'enum', enum: ['MALE', 'FEMALE'] })
@@ -21,6 +24,12 @@ export class Character {
 
   @Column()
   age: number;
+
+  @Column({type: 'enum', enum: Race})
+  race: Race;
+
+  @Column({type: 'enum', enum: CharacterSpecClass})
+  class: CharacterSpecClass;
 
   @OneToMany(() => Inventory, (inventory) => inventory.character)
   inventories: Inventory[];

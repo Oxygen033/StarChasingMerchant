@@ -5,6 +5,7 @@ export class CreateInventoryDto {
   @IsNumber()
   capacity: number;
 
-  @IsOptional()
-  relatedItem: string;
+  @IsNotEmpty()
+  @IsNumber()
+  character: number;
 }

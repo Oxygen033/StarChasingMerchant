@@ -6,16 +6,20 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { Req } from '@nestjs/common';
 import { CharactersService } from './characters.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('characters')
 export class CharactersController {
   constructor(private readonly charactersService: CharactersService) {}
 
-  @Post()
+  @UseGuards(AuthGuard)
+  @Post(@Req() req:Request)
   create(@Body() createCharacterDto: CreateCharacterDto) {
     return this.charactersService.create(createCharacterDto);
   }
@@ -30,6 +34,7 @@ export class CharactersController {
     return this.charactersService.findOne(+id);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -38,6 +43,7 @@ export class CharactersController {
     return this.charactersService.update(+id, updateCharacterDto);
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.charactersService.remove(+id);

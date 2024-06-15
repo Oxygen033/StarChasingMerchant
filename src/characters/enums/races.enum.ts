@@ -1,8 +1,8 @@
 export enum Race {
-  HUMAN,
-  ELF,
-  DWARF,
-  HALFELF,
-  HALFDWARF,
+  HUMAN = 'HUMAN',
+  ELF = 'ELF',
+  DWARF = 'DWARF',
+  HALFELF = 'HALFELF',
+  HALFDWARF = 'HALFDWARF',
   //TODO
 }

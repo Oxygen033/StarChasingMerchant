@@ -6,10 +6,11 @@ import { Character } from './entities/character.entity';
 import { InventoriesModule } from 'src/inventories/inventories.module';
 import { InventoriesService } from 'src/inventories/inventories.service';
 import { JwtModule } from '@nestjs/jwt';
+import { User } from 'src/users/entities/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Character]),
+    TypeOrmModule.forFeature([Character, User]),
     forwardRef(() => InventoriesModule),
     JwtModule
   ],

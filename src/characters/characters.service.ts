@@ -16,7 +16,7 @@ export class CharactersService {
      @Inject(forwardRef(() => InventoriesService))
      private inventoriesService: InventoriesService,
      @InjectRepository(User)
-     private usersRepository: Repository<User>
+     private usersRepository: Repository<User>,
   ) {}
 
   async create(createCharacterDto: CreateCharacterDto, @Req() req:Request) {
@@ -30,6 +30,7 @@ export class CharactersService {
     user.character = createdCharacter;
     await this.usersRepository.save(user);
     await this.inventoriesService.createDefaultInventory(createdCharacter.id);
+    await this.inventoriesService.createDefaultEquipmentSlots(createdCharacter.id);
   }
 
   async findAll() {

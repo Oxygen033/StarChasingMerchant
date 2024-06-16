@@ -1,0 +1,6 @@
+{
+    "name": "Cloth shirt",
+    "description": "Common shirt",
+    "type": "CLOTHING_UPPERBODY",
+    "cost": 10
+}

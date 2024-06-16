@@ -4,7 +4,6 @@ import { CharactersController } from './characters.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Character } from './entities/character.entity';
 import { InventoriesModule } from 'src/inventories/inventories.module';
-import { InventoriesService } from 'src/inventories/inventories.service';
 import { JwtModule } from '@nestjs/jwt';
 import { User } from 'src/users/entities/user.entity';
 

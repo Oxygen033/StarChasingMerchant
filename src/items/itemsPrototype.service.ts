@@ -12,14 +12,14 @@ export class ItemPrototypeService {
   }
 
   private loadItemPrototypes() {
-    const files = fs.readdirSync(this.itemsDirectory);
+    const files = fs.readdirSync(this.itemsDirectory, {recursive: true});
     files.forEach((file) => {
       if (file.endsWith('.json')) {
         try {
           const itemData = JSON.parse(
             fs.readFileSync(path.join(this.itemsDirectory, file), 'utf-8'),
           );
-          this.itemPrototypes[file.replace('.json', '')] = itemData;
+          this.itemPrototypes[file.split('\\').pop().replace('.json', '')] = itemData;
           console.log(
             '\x1b[32m',
             `Successfully loaded prototype for item: ${itemData.name}`,

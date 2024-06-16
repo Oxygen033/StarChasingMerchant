@@ -1,6 +1,6 @@
 import { Inventory } from 'src/inventories/entities/inventory.entity';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, AfterInsert } from 'typeorm';
-import { EquipmentSlot } from './equipmentSlot.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, AfterInsert, OneToOne, JoinColumn } from 'typeorm';
+import { EquipmentSlots } from 'src/inventories/entities/equipmentSlots.entity';
 import { Race } from '../enums/races.enum';
 import { CharacterSpecClass } from '../enums/classes.enum';
 import { InventoriesService } from 'src/inventories/inventories.service';
@@ -34,6 +34,7 @@ export class Character {
   @OneToMany(() => Inventory, (inventory) => inventory.character)
   inventories: Inventory[];
 
-  @OneToMany(() => EquipmentSlot, (equipmentSlot) => equipmentSlot.character)
-  equipmentSlots: EquipmentSlot[];
+  @OneToOne(() => EquipmentSlots)
+  @JoinColumn()
+  equipmentSlots: EquipmentSlots;
 }

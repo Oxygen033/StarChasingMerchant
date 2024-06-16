@@ -1,0 +1,6 @@
+{
+    "name": "Cloth pants",
+    "description": "Common pants",
+    "type": "CLOTHING_LEGS",
+    "cost": 10
+}

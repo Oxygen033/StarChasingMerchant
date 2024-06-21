@@ -22,6 +22,7 @@ export class ItemFactoryService {
       prototype.description,
       prototype.type,
       prototype.cost,
+      prototype.useMessage
     );
   }
 }

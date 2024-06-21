@@ -28,6 +28,15 @@ export class Character {
   @Column({type: 'enum', enum: Race})
   race: Race;
 
+  @Column({default: 100})
+  hp: number;
+
+  @Column({default: 100})
+  mana: number;
+
+  @Column({default: 1000})
+  gold: number;
+
   @Column({type: 'enum', enum: CharacterSpecClass})
   class: CharacterSpecClass;
 

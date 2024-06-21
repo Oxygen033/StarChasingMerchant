@@ -9,6 +9,9 @@ import { CharactersModule } from './characters/characters.module';
 import { InventoriesModule } from './inventories/inventories.module';
 import { ItemsModule } from './items/items.module';
 import { AuthModule } from './auth/auth.module';
+import { JorneysModule } from './jorneys/jorneys.module';
+import { ChatModule } from './chat/chat.module';
+import { PrototypesModule } from './prototypes/prototypes.module';
 
 @Module({
   imports: [
@@ -28,6 +31,9 @@ import { AuthModule } from './auth/auth.module';
     InventoriesModule,
     ItemsModule,
     AuthModule,
+    JorneysModule,
+    ChatModule,
+    PrototypesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

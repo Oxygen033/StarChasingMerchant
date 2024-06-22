@@ -1,8 +1,6 @@
 import { Inject, Injectable, Req, forwardRef } from '@nestjs/common';
 import { ItemFactoryService } from './itemsFactory.service';
 import { Request } from 'express';
-import { ItemPrototypeService } from './itemsPrototype.service';
-import { ItemType } from './enums/ItemType';
 import { ChatGateway } from 'src/chat/chat.gateway';
 import { PrototypesService } from 'src/prototypes/prototypes.service';
 

@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { ItemPrototypeService } from './itemsPrototype.service';
 import * as path from 'path';
-import { Item } from './entities/item.entity';
+import { PrototypesService } from 'src/prototypes/prototypes.service';
 
 @Injectable()
 export class ItemFactoryService {
-  constructor(private readonly itemPrototypeService: ItemPrototypeService) {}
+  constructor(private prototypeService: PrototypesService) {}
 
   createItem(name: string) {
-    const prototype = this.itemPrototypeService.getItemPrototype(name);
+    const prototype = this.prototypeService.getPrototype(name, 'items');
     if (!prototype) {
       throw new Error(`Item prototype ${name} not found`);
     }

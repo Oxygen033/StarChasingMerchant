@@ -38,7 +38,7 @@ export class CharactersService {
   }
 
   async findOne(_id: number) {
-    return await this.charactersRepository.findOne({where: {id: _id}});
+    return await this.charactersRepository.findOne({where: {id: _id}, relations: {inventories: true, equipmentSlots: true, journey: true}});
   }
 
   async update(_id: number, updateCharacterDto: UpdateCharacterDto, @Req() req:Request) {

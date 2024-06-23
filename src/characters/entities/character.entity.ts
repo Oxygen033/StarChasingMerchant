@@ -4,6 +4,7 @@ import { EquipmentSlots } from 'src/inventories/entities/equipmentSlots.entity';
 import { Race } from '../enums/races.enum';
 import { CharacterSpecClass } from '../enums/classes.enum';
 import { InventoriesService } from 'src/inventories/inventories.service';
+import { Journey } from 'src/journeys/entities/journey.entity';
 
 @Entity()
 export class Character {
@@ -46,4 +47,7 @@ export class Character {
   @OneToOne(() => EquipmentSlots)
   @JoinColumn()
   equipmentSlots: EquipmentSlots;
+
+  @OneToOne(() => Journey, journey => journey.character)
+  journey: Journey;
 }

@@ -18,6 +18,8 @@ export class JourneysService {
     private charactersRepository: Repository<Character>,
     private chatGateway: ChatGateway,
   ) { }
+  @WebSocketServer()
+  server: Server;
 
   async startJorney(createJourneyDto: CreateJourneyDto) {
     const character = await this.charactersRepository.findOne({ where: { id: createJourneyDto.characterId } });
@@ -69,7 +71,7 @@ export class JourneysService {
       setTimeout(async () => {
         if (!journey.isPaused) {
           const event = this.generateRandomEvent();
-          //this.server.emit('journeyEvent', event);
+          this.server.emit('journeyEvent', event);
           console.log("event");
           journey.events.push(event);
           await this.journeysRepository.save(journey);

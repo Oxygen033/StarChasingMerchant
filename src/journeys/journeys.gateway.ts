@@ -2,6 +2,7 @@ import { WebSocketGateway, SubscribeMessage, MessageBody, ConnectedSocket, WebSo
 import { JourneysService } from './journeys.service';
 import { CreateJourneyDto } from './dto/create-journey.dto';
 import { Socket, Server } from 'socket.io';
+import { OnEvent } from '@nestjs/event-emitter';
 
 @WebSocketGateway()
 export class JourneysGateway {
@@ -19,8 +20,13 @@ export class JourneysGateway {
     }
   }
 
+  @OnEvent('journeyEvent')
+  handleJourneyEvent(payload: any) {
+    this.server.emit('journeyEvent', payload);
+  }
+
   @SubscribeMessage('pauseJourney')
-  async pauseJourney(@MessageBody() characterId: number) {
+  async pauseJourney(@MessageBody('characterId') characterId: number) {
     try {
       await this.journeysService.pauseJourney(characterId);
       this.server.emit('journeyPaused', characterId);
@@ -30,7 +36,7 @@ export class JourneysGateway {
   }
 
   @SubscribeMessage('resumeJourney')
-  async handleResumeJourney(characterId: number) {
+  async handleResumeJourney(@MessageBody('characterId') characterId: number) {
     try {
       await this.journeysService.resumeJourney(characterId);
       this.server.emit('journeyResumed', characterId);

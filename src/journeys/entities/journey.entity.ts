@@ -20,8 +20,11 @@ export class Journey {
     @Column()
     startTime: Date;
 
-    @Column()
+    @Column({ nullable: true })
     endTime: Date;
+
+    @Column()
+    remainingTime: number;
 
     @Column()
     isPaused: boolean;

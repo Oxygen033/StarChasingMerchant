@@ -9,6 +9,8 @@ import { WebSocketServer } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 import { Character } from 'src/characters/entities/character.entity';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { PrototypesService } from 'src/prototypes/prototypes.service';
+import { Category } from 'src/prototypes/enums/category.enum';
 
 @Injectable()
 export class JourneysService implements OnModuleDestroy {
@@ -21,7 +23,8 @@ export class JourneysService implements OnModuleDestroy {
     @InjectRepository(Character)
     private charactersRepository: Repository<Character>,
     private chatGateway: ChatGateway,
-    private eventEmitter: EventEmitter2
+    private eventEmitter: EventEmitter2,
+    private prototypeService: PrototypesService
   ) { }
 
   async onModuleDestroy() {
@@ -45,6 +48,11 @@ export class JourneysService implements OnModuleDestroy {
       throw new InternalServerErrorException('Character already in journey');
     }
 
+    if (!Object.keys(this.prototypeService.getPrototypesList(Category.TOWNS)).includes(createJourneyDto.startPoint) ||
+      !Object.keys(this.prototypeService.getPrototypesList(Category.TOWNS)).includes(createJourneyDto.endPoint)) {
+      throw new InternalServerErrorException('Start/end points incorrect!');
+    }
+
     const journey = new Journey();
     journey.character = character;
     journey.startPoint = createJourneyDto.startPoint;
@@ -56,7 +64,7 @@ export class JourneysService implements OnModuleDestroy {
     const savedJourney = await this.journeysRepository.save(journey);
 
     this.startJourneyTimer(savedJourney);
-    this.chatGateway.sendMessage(`Journey from ${journey.startPoint} to ${journey.endPoint} started.`);
+    this.chatGateway.sendMessage(`Journey from ${this.prototypeService.getPrototype(journey.startPoint, Category.TOWNS).name} to ${this.prototypeService.getPrototype(journey.endPoint, Category.TOWNS).name} started.`);
     console.log(
       `Character ${(await this.charactersRepository.findOne({ where: { id: createJourneyDto.characterId } })).name} (${createJourneyDto.characterId}) started journey ${savedJourney.id} from ${createJourneyDto.startPoint} to ${createJourneyDto.endPoint}`
     );

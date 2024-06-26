@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
+import { Category } from './enums/category.enum';
 
 @Injectable()
 export class PrototypesService {
@@ -41,7 +42,12 @@ export class PrototypesService {
         this.prototypes[folderName] = prototypesList;
     }
 
-    getPrototype(name: string, category: string) {
+    getPrototype(name: string, category: Category) {
         return this.prototypes[category]?.[name];
+    }
+
+    getPrototypesList(category: Category) {
+        console.log(this.prototypes[category]);
+        return this.prototypes[category];
     }
 }

@@ -15,10 +15,10 @@ export class Inventory {
 
   @ManyToOne(() => Character, (character) => character.inventories)
   character: Character;
-  
+
   @Column()
   capacity: number;
 
   @OneToMany(() => InventoryItem, (inventoryItem) => inventoryItem.inventory)
-  items: InventoryItem;
+  items: InventoryItem[];
 }

@@ -118,6 +118,7 @@ export class JourneysService implements OnModuleDestroy {
     journey.character.journey = null;
     await this.charactersRepository.save(journey.character);
     await this.journeysRepository.delete({ id: journey.id });
+    this.chatGateway.sendMessage(`Journey finished, you reached ${this.prototypeService.getPrototype(journey.endPoint, Category.TOWNS).name}`)
   }
 
   async pauseJourney(characterId: number) {

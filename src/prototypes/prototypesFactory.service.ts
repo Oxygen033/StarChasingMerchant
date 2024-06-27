@@ -32,7 +32,6 @@ export class PrototypeFactoryService {
                     prototype.x,
                     prototype.y
                 );
-                break;
         }
     }
 }

@@ -36,6 +36,7 @@ export class InventoriesService {
     }
     const inventory: Inventory = new Inventory();
     inventory.capacity = capacity;
+    inventory.remainingCapacity = capacity;
     inventory.character = targetCharacter;
     return await this.inventoriesRepository.save(inventory);
   }
@@ -76,11 +77,10 @@ export class InventoriesService {
     if (!character) {
       throw new NotFoundException(`Character with id ${characterId} not found`);
     }
-    const inventory: Inventory = new Inventory();
-    inventory.capacity = 100;
-    inventory.character = character;
-
-    return await this.inventoriesRepository.save(inventory);
+    return await this.create({
+      character: character.id,
+      capacity: 100
+    });
   }
 
   async createDefaultEquipmentSlots(characterId: number) {
@@ -97,9 +97,12 @@ export class InventoriesService {
     await this.charactersRepository.save(character);
   }
 
-  //TODO!!! ADD CAPACITY CHECKS
   async addItem(inventoryId: number, itemName: string, count: number) {
     const inventory = await this.inventoriesRepository.findOne({ where: { id: inventoryId } });
+    if (inventory.remainingCapacity - count < 0) {
+      throw new Error('No place in inventory!');
+    }
+
     if (!inventory) {
       throw new NotFoundException('Inventory not found!');
     }
@@ -115,6 +118,8 @@ export class InventoriesService {
       invItem.slotNumber = await this.calculateInvSlot(inventoryId);
       await this.invItemsRepository.save(invItem);
     }
+    inventory.remainingCapacity -= count;
+    this.inventoriesRepository.save(inventory);
   }
 
   async calculateInvSlot(inventoryId: number) {
@@ -151,5 +156,7 @@ export class InventoriesService {
         throw new InternalServerErrorException('Item not found!');
       }
     }
+    inventory.remainingCapacity += count;
+    this.inventoriesRepository.save(inventory);
   }
 }

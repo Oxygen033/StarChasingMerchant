@@ -19,6 +19,9 @@ export class Inventory {
   @Column()
   capacity: number;
 
+  @Column()
+  remainingCapacity: number;
+
   @OneToMany(() => InventoryItem, (inventoryItem) => inventoryItem.inventory)
   items: InventoryItem[];
 }

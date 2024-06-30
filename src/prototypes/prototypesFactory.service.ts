@@ -26,6 +26,21 @@ export class PrototypeFactoryService {
                     prototype.cost,
                     prototype.useMessage
                 );
+            case Category.EVENTS:
+                const eventScriptPath = prototype.script
+                    ? path.join(__dirname, '../../dist/jorneys/events/scripts', prototype.script) +
+                    '.js'
+                    : path.join(__dirname, '../../dist/jorneys/events/scripts/nopEvent.js');
+                const eventClass = require(eventScriptPath).default;
+                return new eventClass(
+                    prototype.name,
+                    prototype.type,
+                    prototype.startMessage,
+                    prototype.startMessageColor,
+                    prototype.weight,
+                    prototype.minLevel,
+                    prototype.minStats
+                );
             case Category.TOWNS:
                 return new ItemClass(
                     prototype.name,

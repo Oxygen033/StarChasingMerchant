@@ -1,4 +1,3 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ItemType } from '../enums/ItemType';
 
 export class Item {
@@ -14,5 +13,5 @@ export class Item {
   type: ItemType;
   cost: number;
 
-  public use(): void {}
+  public use(): void { }
 }

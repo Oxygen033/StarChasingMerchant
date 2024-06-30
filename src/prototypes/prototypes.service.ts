@@ -8,6 +8,7 @@ export class PrototypesService {
     constructor() {
         this.loadPrototypes('items');
         this.loadPrototypes('towns');
+        this.loadPrototypes('journeysEvents');
     }
     /*All prototypes should be placed inside resources/ directory and loaded with loadPrototypes(foldername)
     where "foldername" is name of prototypes category. All sub-directories inside root folders parsed automatically*/

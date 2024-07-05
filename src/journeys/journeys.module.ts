@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { JourneysService } from './journeys.service';
 import { JourneysGateway } from './journeys.gateway';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -9,10 +9,11 @@ import { PrototypesModule } from 'src/prototypes/prototypes.module';
 
 @Module({
   imports: [
-    PrototypesModule,
     TypeOrmModule.forFeature([Journey, Character]),
-    ChatModule
+    ChatModule,
+    forwardRef(() => PrototypesModule),
   ],
   providers: [JourneysGateway, JourneysService],
+  exports: [JourneysService]
 })
 export class JorneysModule { }

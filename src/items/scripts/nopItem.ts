@@ -1,3 +1,5 @@
-import { Item } from '../entities/item.entity';
+import { ItemPrototype } from 'src/prototypes/classes/itemPrototype';
 
-export default class NopItem extends Item { }
+export default class NopItem extends ItemPrototype {
+    use() { }
+}

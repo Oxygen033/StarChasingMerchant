@@ -1,3 +1,7 @@
-import { JourneyEvent } from "src/journeys/entities/journeyEvent";
+import { JourneyEventPrototype } from "src/prototypes/classes/journeyEventPrototype";
 
-export default class NopEvent extends JourneyEvent { }
+export default class NopEvent extends JourneyEventPrototype {
+    activate(): void {
+
+    }
+}

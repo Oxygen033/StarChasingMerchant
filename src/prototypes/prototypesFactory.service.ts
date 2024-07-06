@@ -42,18 +42,20 @@ export class PrototypeFactoryService {
         }
     }
 
+    //This system NEED TO BE COMPLETELY REWORKED to exclude
+    //unnesessary dependencies from prototype
+    //For now, it works as is
     private createPrototypeInstance<T extends BasePrototype>(
         PrototypeClass: new (...args: any[]) => T,
         prototypeData: any,
         category: Category
     ): T {
-        const paramTypes = Reflect.getMetadata('design:paramtypes', PrototypeClass) || [];
-        const injectedParams = paramTypes.map(param => this.diContainer.getInjectable(param.name));
-
-        const instance = new PrototypeClass(prototypeData, ...injectedParams);
-
+        const instance = new PrototypeClass(
+            prototypeData,
+            this.diContainer.getInjectable('ChatGateway'),
+            this.diContainer.getInjectable('JourneysService')
+        );
         this.validatePrototypeInstance(instance, category);
-
         return instance;
     }
 

@@ -12,7 +12,13 @@ export class PrototypesDIContainer {
         // Other nesessary services will be added here
     ) { }
 
-    getInjectable(name: string): any {
-        return this[name];
+    //This part WILL BE REWORKED
+    //For now it works as is
+    getInjectable(key: string): any {
+        const injectables = {
+            'ChatGateway': this.chatGateway,
+            'JourneysService': this.journeysService,
+        };
+        return injectables[key];
     }
 }

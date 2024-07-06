@@ -1,5 +1,4 @@
 import { ChatGateway } from 'src/chat/chat.gateway';
-import { ChatColor } from 'src/chat/enums/ChatColor.enum';
 import { ItemPrototype } from 'src/prototypes/classes/itemPrototype';
 
 export default class UselessStone extends ItemPrototype {

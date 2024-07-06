@@ -6,10 +6,11 @@ import { Character } from './entities/character.entity';
 import { InventoriesModule } from 'src/inventories/inventories.module';
 import { JwtModule } from '@nestjs/jwt';
 import { User } from 'src/users/entities/user.entity';
+import { CharacterStats } from './entities/characterStats.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Character, User]),
+    TypeOrmModule.forFeature([Character, User, CharacterStats]),
     forwardRef(() => InventoriesModule),
     JwtModule
   ],
@@ -17,4 +18,4 @@ import { User } from 'src/users/entities/user.entity';
   providers: [CharactersService],
   exports: [CharactersService],
 })
-export class CharactersModule {}
+export class CharactersModule { }

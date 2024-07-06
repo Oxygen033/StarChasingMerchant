@@ -1,4 +1,5 @@
 export enum Category {
     ITEMS = 'items',
-    TOWNS = 'towns'
+    TOWNS = 'towns',
+    EVENTS = 'events'
 }

@@ -1,7 +1,17 @@
-import { Item } from '../entities/item.entity';
+import { ChatGateway } from 'src/chat/chat.gateway';
+import { ItemPrototype } from 'src/prototypes/classes/itemPrototype';
 
-export default class DebugItem extends Item {
-  public override use() {
-    console.log(`${this.name} used! It costs ${this.cost}`);
+export default class UselessStone extends ItemPrototype {
+  constructor(
+    prototypeData: any,
+    private chatGateway: ChatGateway
+  ) {
+    super(prototypeData);
+  }
+
+  use() {
+    console.log(`${this.prototypeData.name} used! It costs ${this.prototypeData.cost}`);
+    this.chatGateway.sendMessage('oh yeah you used stone. Dev is looser btw');
+    console.log('second stage, lessgoo');
   }
 }

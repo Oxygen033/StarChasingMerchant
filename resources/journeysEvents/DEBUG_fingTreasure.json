@@ -1,0 +1,15 @@
+{
+    "name": "Sudden treasure",
+    "type": "GENERAL",
+    "script": "debugJouney1",
+    "startMessage": "You find treasure on the ground.",
+    "startMessageColor": "GREEN",
+    "weight": 10,
+    "minLevel": 0,
+    "minStats": {
+        "strenght": 0,
+        "agility": 0,
+        "intelligence": 0,
+        "magicPresence": 0
+    }
+}

@@ -1,4 +1,4 @@
-import { Inject, Injectable, InternalServerErrorException, NotFoundException, forwardRef } from '@nestjs/common';
+import { Inject, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException, forwardRef } from '@nestjs/common';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { UpdateInventoryDto } from './dto/update-inventory.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -97,8 +97,13 @@ export class InventoriesService {
     await this.charactersRepository.save(character);
   }
 
-  async addItem(inventoryId: number, itemName: string, count: number) {
+  async addItem(inventoryId: number, itemName: string, count: number, charId: number) {
     const inventory = await this.inventoriesRepository.findOne({ where: { id: inventoryId } });
+
+    if (charId != inventory.character.id) {
+      throw new UnauthorizedException('Character mismatch');
+    }
+
     if (inventory.remainingCapacity - count < 0) {
       throw new Error('No place in inventory!');
     }
@@ -134,8 +139,13 @@ export class InventoriesService {
     return slotNumber;
   }
 
-  async removeItem(inventoryId: number, itemName: string, count: number) {
+  async removeItem(inventoryId: number, itemName: string, count: number, charId: number) {
     const inventory = await this.inventoriesRepository.findOne({ where: { id: inventoryId } });
+
+    if (charId != inventory.character.id) {
+      throw new UnauthorizedException('Character mismatch');
+    }
+
     if (!inventory) {
       throw new NotFoundException('Inventory not found!');
     }

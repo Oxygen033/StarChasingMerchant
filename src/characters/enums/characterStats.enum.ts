@@ -1,0 +1,6 @@
+export enum CharacterStats {
+    STRENGHT = 'STRENGHT',
+    AGILITY = 'AGILITY',
+    INTELLIGENCE = 'INTELLIGENCE',
+    MAGICPRESENCE = 'MAGICPRESENCE'
+}

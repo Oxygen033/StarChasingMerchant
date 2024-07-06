@@ -1,7 +1,7 @@
 ## Star-chasing merchant
 EN: Server for text-based web game inspired by Space Station 13/14, Godville and some other ideas.
 
-RU: Сервер для текстовой веб-игры, вдохновлённой Space Station 13/14, Годвилль и другими идеями.
+RU: Сервер для текстовой веб-игры, вдохновлённой Space Station 13/14, Годвилль и другими идеями ([AlexShtal](https://github.com/AlexShtal)).
 
 ## Status
 
@@ -18,3 +18,8 @@ RU: Я разрабатываю этот проект в одиночку для
 не завершён, но я надеюсь привести его в минимально рабочее состояние с базовыми механиками.
 
 У меня нет планов по разработке фронтенда для этого проекта, если только это не будет необходимо для полномасштабного тестирования. Это может измениться в будущем.
+
+## Build and run
+Execute dockerfile 
+(e.g. POSTGRES_USERNAME=myuser POSTGRES_PASSWORD=mypassword POSTGRES_DB=mydb POSTGRES_PORT=myport TOKEN_SECRET=mysecret APP_PORT=myport2 docker-compose up  --build) 
+or run manually with yarn (requires locally deployed postgresql and .env file for credentials)

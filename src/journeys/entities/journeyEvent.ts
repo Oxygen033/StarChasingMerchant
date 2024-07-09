@@ -8,7 +8,7 @@ export class JourneyEvent {
         _startMessageColor: ChatColor,
         _weight: number,
         _minLevel: number,
-        _minStats: Record<string, string>
+        _minStats: Record<string, number>
     ) {
         this.name = _name;
         this.type = _type;
@@ -25,7 +25,7 @@ export class JourneyEvent {
     startMessageColor: ChatColor;
     weight: number;
     minLevel: number;
-    minStats: Record<string, string>
+    minStats: Record<string, number>
 
     public activate(): void { }
 }

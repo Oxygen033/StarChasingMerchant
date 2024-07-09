@@ -4,13 +4,11 @@ import { Repository } from 'typeorm';
 import { Journey } from './entities/journey.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChatGateway } from 'src/chat/chat.gateway';
-import { CharactersService } from 'src/characters/characters.service';
-import { WebSocketServer } from '@nestjs/websockets';
-import { Socket, Server } from 'socket.io';
 import { Character } from 'src/characters/entities/character.entity';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { PrototypesService } from 'src/prototypes/prototypes.service';
 import { Category } from 'src/prototypes/enums/category.enum';
+import { JourneysEventsService } from './journeysEvents.service';
 
 @Injectable()
 export class JourneysService implements OnModuleDestroy {
@@ -24,7 +22,8 @@ export class JourneysService implements OnModuleDestroy {
     private charactersRepository: Repository<Character>,
     private chatGateway: ChatGateway,
     private eventEmitter: EventEmitter2,
-    private prototypeService: PrototypesService
+    private prototypeService: PrototypesService,
+    private journeysEventsService: JourneysEventsService
   ) { }
 
   async onModuleDestroy() {
@@ -39,7 +38,7 @@ export class JourneysService implements OnModuleDestroy {
   }
 
   async startJorney(createJourneyDto: CreateJourneyDto) {
-    const character = await this.charactersRepository.findOne({ where: { id: createJourneyDto.characterId } });
+    const character = await this.charactersRepository.findOne({ where: { id: createJourneyDto.characterId }, relations: { stats: true } });
     if (!character) {
       throw new NotFoundException('Character not found');
     }
@@ -90,9 +89,9 @@ export class JourneysService implements OnModuleDestroy {
       const delay = Math.random() * 60000 + 60000;
       const timer = setTimeout(async () => {
         if (!journey.isPaused) {
-          const event = this.generateRandomEvent();
+          const event = this.journeysEventsService.spawnEvent(journey.character);
           this.eventEmitter.emit('journeyEvent', event);
-          console.log("event");
+          this.journeysEventsService.spawnEvent(journey.character);
           journey.events.push(event);
           await this.journeysRepository.save(journey);
         }
@@ -102,10 +101,6 @@ export class JourneysService implements OnModuleDestroy {
       this.eventTimers.set(journey.id, timer);
     }
     scheduleNextEvent();
-  }
-
-  private generateRandomEvent() {
-    return { type: 'battle', desc: 'dwfwfwfwfwefwef' };
   }
 
   async endJourney(journeyId: number) {
@@ -118,7 +113,8 @@ export class JourneysService implements OnModuleDestroy {
     journey.character.journey = null;
     await this.charactersRepository.save(journey.character);
     await this.journeysRepository.delete({ id: journey.id });
-    this.chatGateway.sendMessage(`Journey finished, you reached ${this.prototypeService.getPrototype(journey.endPoint, Category.TOWNS).name}`)
+    this.chatGateway.sendMessage(`Journey finished, you reached ${this.prototypeService.getPrototype(journey.endPoint, Category.TOWNS).name}`);
+    console.log('journey finished');
   }
 
   async pauseJourney(characterId: number) {

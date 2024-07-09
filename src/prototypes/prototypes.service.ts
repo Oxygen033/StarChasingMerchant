@@ -48,7 +48,6 @@ export class PrototypesService {
     }
 
     getPrototypesList(category: Category) {
-        console.log(this.prototypes[category]);
         return this.prototypes[category];
     }
 }

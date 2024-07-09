@@ -6,6 +6,7 @@ import { Journey } from './entities/journey.entity';
 import { ChatModule } from 'src/chat/chat.module';
 import { Character } from 'src/characters/entities/character.entity';
 import { PrototypesModule } from 'src/prototypes/prototypes.module';
+import { JourneysEventsService } from './journeysEvents.service';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { PrototypesModule } from 'src/prototypes/prototypes.module';
     ChatModule,
     forwardRef(() => PrototypesModule),
   ],
-  providers: [JourneysGateway, JourneysService],
+  providers: [JourneysGateway, JourneysService, JourneysEventsService],
   exports: [JourneysService]
 })
 export class JorneysModule { }

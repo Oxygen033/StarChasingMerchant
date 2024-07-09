@@ -12,6 +12,5 @@ export default class UselessStone extends ItemPrototype {
   use() {
     console.log(`${this.prototypeData.name} used! It costs ${this.prototypeData.cost}`);
     this.chatGateway.sendMessage('oh yeah you used stone. Dev is looser btw');
-    console.log('second stage, lessgoo');
   }
 }

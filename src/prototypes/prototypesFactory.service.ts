@@ -22,7 +22,6 @@ export class PrototypeFactoryService {
         }
 
         const scriptPath = this.getScriptPath(category, prototype.script);
-        console.log(scriptPath);
         const PrototypeClass = require(scriptPath).default;
 
         return this.createPrototypeInstance<T>(PrototypeClass, prototype, category);
@@ -33,7 +32,7 @@ export class PrototypeFactoryService {
         switch (category) {
             case Category.ITEMS:
                 return path.join(basePath, 'items/scripts', script || 'nopItem') + '.js';
-            case Category.EVENTS:
+            case Category.JOURNEYS_EVENTS:
                 return path.join(basePath, 'journeys/events/scripts', script || 'nopEvent') + '.js';
             case Category.TOWNS:
                 return path.join(basePath, 'towns/scripts', script || null) + '.js';
@@ -66,7 +65,7 @@ export class PrototypeFactoryService {
                     throw new Error(`Invalid prototype instance for category ${category}. Expected ItemPrototype.`);
                 }
                 break;
-            case Category.EVENTS:
+            case Category.JOURNEYS_EVENTS:
                 if (!(instance instanceof JourneyEventPrototype)) {
                     throw new Error(`Invalid prototype instance for category ${category}. Expected JourneyPrototype.`);
                 }

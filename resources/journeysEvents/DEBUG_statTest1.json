@@ -1,11 +1,11 @@
 {
-    "name": "Sudden treasure",
+    "name": "DEBUG EVENT 2",
     "type": "GENERAL",
     "script": "debugJouney1",
-    "startMessage": "You find treasure on the ground.",
+    "startMessage": "Something",
     "startMessageColor": "GREEN",
     "weight": 0.1,
-    "minLevel": 0,
+    "minLevel": 2,
     "minStats": {
         "strenght": 0,
         "agility": 0,

@@ -16,7 +16,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async login(loginDto: CreateUserDto, @Res() res: Response) {
     const user = await this.usersService.findOne(loginDto.username);
@@ -24,10 +24,12 @@ export class AuthService {
       if (!(await bcrypt.compare(loginDto.password, user?.password))) {
         throw new UnauthorizedException();
       }
+      console.log(user.id, user.username, user.roles, user.character.id);
       const payload = {
         sub: user.id,
         username: user.username,
         roles: user.roles,
+        char: user.character.id
       };
       return res
         .set({ Authorization: await this.jwtService.signAsync(payload) })

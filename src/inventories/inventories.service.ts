@@ -1,4 +1,4 @@
-import { Inject, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException, forwardRef } from '@nestjs/common';
+import { Inject, Injectable, InternalServerErrorException, NotFoundException, Req, UnauthorizedException, forwardRef } from '@nestjs/common';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { UpdateInventoryDto } from './dto/update-inventory.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,6 +10,10 @@ import { EquipmentSlots } from './entities/equipmentSlots.entity';
 import { InventoryItem } from 'src/items/entities/inventoryItem.entity';
 import { PrototypesService } from 'src/prototypes/prototypes.service';
 import { Category } from 'src/prototypes/enums/category.enum';
+import { Request } from 'express';
+import { PrototypeFactoryService } from 'src/prototypes/prototypesFactory.service';
+import { ItemPrototype } from 'src/prototypes/classes/itemPrototype';
+import { ChatGateway } from 'src/chat/chat.gateway';
 
 @Injectable()
 export class InventoriesService {
@@ -24,7 +28,9 @@ export class InventoriesService {
     private charactersRepository: Repository<Character>,
     @Inject(forwardRef(() => CharactersService))
     private charactersService: CharactersService,
-    private prototypesService: PrototypesService
+    private prototypesService: PrototypesService,
+    private prototypesFactoryService: PrototypeFactoryService,
+    private chatGateway: ChatGateway
   ) { }
 
 
@@ -98,8 +104,8 @@ export class InventoriesService {
   }
 
   async addItem(inventoryId: number, itemName: string, count: number, charId: number) {
-    const inventory = await this.inventoriesRepository.findOne({ where: { id: inventoryId } });
-
+    const inventory = await this.inventoriesRepository.findOne({ where: { id: inventoryId }, relations: { character: true } });
+    console.log(inventoryId, itemName, count, charId);
     if (charId != inventory.character.id) {
       throw new UnauthorizedException('Character mismatch');
     }
@@ -168,5 +174,17 @@ export class InventoriesService {
     }
     inventory.remainingCapacity += count;
     this.inventoriesRepository.save(inventory);
+  }
+
+  async useItem(inventoryId: number, slotNumber: number, @Req() req: Request) {
+    const inventory = await this.inventoriesRepository.findOne({ where: { id: inventoryId } });
+    const itemName = (await this.invItemsRepository.findOne({ where: { slotNumber: slotNumber, inventory: inventory } })).itemName;
+    const item = this.prototypesFactoryService.instantiatePrototype<ItemPrototype>(Category.ITEMS, itemName);
+    const currentDate = new Date();
+    console.log(
+      `\x1b[34m[LOG ${currentDate.getDate()}/${currentDate.getMonth()}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}]\x1b[0m User ${req.username} (${req.id}) used item ${itemName}`,
+    );
+    this.chatGateway.sendItemUseMessage(itemName);
+    return item.use();
   }
 }

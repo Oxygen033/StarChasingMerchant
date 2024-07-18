@@ -4,7 +4,7 @@
     "script": "debugJouney1",
     "startMessage": "You find treasure on the ground.",
     "startMessageColor": "GREEN",
-    "weight": 0.1,
+    "weight": 0.9,
     "minLevel": 0,
     "minStats": {
         "strenght": 0,

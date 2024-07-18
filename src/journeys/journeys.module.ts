@@ -7,12 +7,14 @@ import { ChatModule } from 'src/chat/chat.module';
 import { Character } from 'src/characters/entities/character.entity';
 import { PrototypesModule } from 'src/prototypes/prototypes.module';
 import { JourneysEventsService } from './journeysEvents.service';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Journey, Character]),
     ChatModule,
     forwardRef(() => PrototypesModule),
+    JwtModule
   ],
   providers: [JourneysGateway, JourneysService, JourneysEventsService],
   exports: [JourneysService]

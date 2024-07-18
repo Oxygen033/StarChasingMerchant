@@ -4,8 +4,8 @@
     "script": "debugJouney1",
     "startMessage": "Something",
     "startMessageColor": "GREEN",
-    "weight": 0.1,
-    "minLevel": 2,
+    "weight": 0.2,
+    "minLevel": 0,
     "minStats": {
         "strenght": 0,
         "agility": 0,

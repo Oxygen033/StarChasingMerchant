@@ -51,7 +51,6 @@ export class InventoriesController {
   @Post('additem/:inventoryId/:itemName/:count')
   @UseGuards(AuthGuard)
   async addItem(@Param('inventoryId') inventoryId: number, @Param('itemName') itemName: string, @Param('count') count: number = 1, @Req() req: Request) {
-    console.log(req.username);
     return await this.inventoriesService.addItem(inventoryId, itemName, count, req.char);
   }
 

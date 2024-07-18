@@ -178,6 +178,11 @@ export class InventoriesService {
 
   async useItem(inventoryId: number, slotNumber: number, @Req() req: Request) {
     const inventory = await this.inventoriesRepository.findOne({ where: { id: inventoryId } });
+
+    if (inventory.character.id != req.char) {
+      throw new InternalServerErrorException('Inventory owner and character mismatch');
+    }
+
     const itemName = (await this.invItemsRepository.findOne({ where: { slotNumber: slotNumber, inventory: inventory } })).itemName;
     const item = this.prototypesFactoryService.instantiatePrototype<ItemPrototype>(Category.ITEMS, itemName);
     const currentDate = new Date();

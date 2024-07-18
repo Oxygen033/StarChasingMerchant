@@ -3,6 +3,8 @@ import { JourneysService } from './journeys.service';
 import { CreateJourneyDto } from './dto/create-journey.dto';
 import { Socket, Server } from 'socket.io';
 import { OnEvent } from '@nestjs/event-emitter';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @WebSocketGateway()
 export class JourneysGateway {

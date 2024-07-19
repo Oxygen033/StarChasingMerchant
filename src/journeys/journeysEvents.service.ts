@@ -15,8 +15,8 @@ export class JourneysEventsService {
     }
 
     spawnEvent(character: Character) {
-        let matchedEvents: string[] = [];
-
+        let matchedEvents: Record<string, number> = {};
+        let summWeight = 0;
         for (const [key, value] of Object.entries(this.eventsList)) {
             if (value.minLevel <= character.level &&
                 value.minStats.strenght <= character.stats.strenght &&
@@ -24,10 +24,19 @@ export class JourneysEventsService {
                 value.minStats.intelligence <= character.stats.intellignce &&
                 value.minStats.magicPresence <= character.stats.magicPresence
             ) {
-                matchedEvents.push(key);
+                matchedEvents[key] = value.weight;
+                summWeight += value.weight;
             }
         }
-        //TODO: implement weights of events
-        return matchedEvents[Math.floor(Math.random() * matchedEvents.length)];
+
+        const randWeight = Math.random() * summWeight;
+        let currentWeight = 0;
+
+        for (const [key, weight] of Object.entries(matchedEvents)) {
+            currentWeight += weight;
+            if (currentWeight > randWeight) {
+                return key;
+            }
+        }
     }
 }

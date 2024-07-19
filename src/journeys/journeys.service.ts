@@ -133,7 +133,7 @@ export class JourneysService implements OnModuleDestroy {
 
   async resumeJourney(characterId: number) {
     const journey = await this.getJourneyByCharacter(characterId);
-    if (!journey || !journey.isPaused) {
+    if (!journey || journey.isPaused != false) {
       throw new NotFoundException('Active journey not found for user');
     }
 

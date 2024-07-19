@@ -16,7 +16,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async login(loginDto: CreateUserDto, @Res() res: Response) {
     const user = await this.usersService.findOne(loginDto.username);
@@ -28,6 +28,7 @@ export class AuthService {
         sub: user.id,
         username: user.username,
         roles: user.roles,
+        char: user.character.id
       };
       return res
         .set({ Authorization: await this.jwtService.signAsync(payload) })

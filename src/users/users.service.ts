@@ -11,7 +11,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     const user = new User();
@@ -27,6 +27,7 @@ export class UsersService {
   async findOne(username: string) {
     return await this.usersRepository.findOne({
       where: { username: username },
+      relations: { character: true }
     });
   }
 
